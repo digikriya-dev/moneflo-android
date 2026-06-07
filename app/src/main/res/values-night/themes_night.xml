@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Simpan sebagai: res/values-night/themes.xml -->
 <resources>
 
-    <!-- Base app theme -->
     <style name="Theme.Moneflo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/cyan_accent</item>
         <item name="colorPrimaryVariant">@color/blue_accent</item>
@@ -14,10 +14,8 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
-    <!-- Login theme — inherit base, tidak tambah resource baru -->
     <style name="Theme.Moneflo.Login" parent="Theme.Moneflo" />
 
-    <!-- NoActionBar variant jika dibutuhkan activity lain -->
     <style name="Theme.Moneflo.NoActionBar" parent="Theme.Moneflo" />
 
 </resources>
