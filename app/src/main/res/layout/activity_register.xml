@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -23,19 +23,9 @@
         android:translationY="-80dp"
         android:alpha="0.4" />
 
-    <View
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom|end"
-        android:background="@drawable/glow_circle_bottom"
-        android:translationY="60dp"
-        android:alpha="0.3" />
-
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_login"
         android:fillViewport="true">
 
         <LinearLayout
@@ -45,28 +35,25 @@
             android:gravity="center_horizontal"
             android:paddingStart="28dp"
             android:paddingEnd="28dp"
-            android:paddingTop="56dp"
+            android:paddingTop="48dp"
             android:paddingBottom="40dp">
 
             <!-- LOGO -->
             <LinearLayout
-                android:id="@+id/logo_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="36dp">
+                android:layout_marginBottom="28dp">
 
                 <FrameLayout
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_marginEnd="10dp">
-
                     <View
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/logo_glow_bg" />
-
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="26dp"
@@ -87,7 +74,6 @@
 
             <!-- FORM CARD -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/form_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/card_bg"
@@ -104,9 +90,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Selamat Datang!"
+                        android:text="Buat Akun Baru"
                         android:textColor="@color/text_primary"
-                        android:textSize="26sp"
+                        android:textSize="24sp"
                         android:fontFamily="@font/poppins_bold"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="4dp" />
@@ -114,20 +100,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Masuk untuk melanjutkan"
+                        android:text="Daftarkan dirimu sekarang"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:fontFamily="@font/poppins_regular"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="28dp" />
+                        android:layout_marginBottom="24dp" />
 
-                    <!-- Username Field -->
+                    <!-- Username -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_username"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="14dp"
                         app:boxBackgroundColor="@color/input_bg"
                         app:boxStrokeColor="@color/input_stroke_selector"
                         app:boxStrokeWidth="1.5dp"
@@ -140,7 +126,6 @@
                         app:startIconDrawable="@drawable/ic_person"
                         app:startIconTint="@color/cyan_accent"
                         android:hint="Username">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_username"
                             android:layout_width="match_parent"
@@ -153,13 +138,75 @@
                             android:paddingBottom="16dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Password Field -->
+                    <!-- Email -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_email"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:errorTextColor="@color/error_red"
+                        app:startIconDrawable="@drawable/ic_email"
+                        app:startIconTint="@color/cyan_accent"
+                        android:hint="Email">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Nama Lengkap -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_nama_lengkap"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:errorTextColor="@color/error_red"
+                        app:startIconDrawable="@drawable/ic_person"
+                        app:startIconTint="@color/cyan_accent"
+                        android:hint="Nama Lengkap">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_nama_lengkap"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName|textCapWords"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Password -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_password"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="14dp"
                         app:boxBackgroundColor="@color/input_bg"
                         app:boxStrokeColor="@color/input_stroke_selector"
                         app:boxStrokeWidth="1.5dp"
@@ -174,7 +221,6 @@
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/text_hint"
                         android:hint="Password">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
@@ -187,42 +233,56 @@
                             android:paddingBottom="16dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Tetap Login + Lupa Password -->
-                    <LinearLayout
+                    <!-- Konfirmasi Password -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_konfirmasi_password"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="24dp">
-
-                        <CheckBox
-                            android:id="@+id/cb_remember_me"
-                            android:layout_width="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:errorTextColor="@color/error_red"
+                        app:startIconDrawable="@drawable/ic_lock"
+                        app:startIconTint="@color/cyan_accent"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="@color/text_hint"
+                        android:hint="Konfirmasi Password">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_konfirmasi_password"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Tetap Login"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="13sp"
+                            android:inputType="textPassword"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
                             android:fontFamily="@font/poppins_regular"
-                            android:buttonTint="@color/cyan_accent"
-                            android:layout_weight="1" />
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/tv_forgot_password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Lupa Password?"
-                            android:textColor="@color/cyan_accent"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:clickable="true"
-                            android:focusable="true" />
-                    </LinearLayout>
+                    <!-- Checkbox Langsung Login -->
+                    <CheckBox
+                        android:id="@+id/cb_langsung_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Langsung Login setelah daftar"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:buttonTint="@color/cyan_accent"
+                        android:layout_marginBottom="20dp" />
 
-                    <!-- Tombol Login -->
+                    <!-- Tombol Daftar -->
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:layout_marginBottom="28dp">
+                        android:layout_marginBottom="20dp">
 
                         <View
                             android:layout_width="match_parent"
@@ -230,14 +290,13 @@
                             android:background="@drawable/btn_gradient_primary" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_sign_in"
+                            android:id="@+id/btn_daftar"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="Masuk"
+                            android:text="Daftar"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:letterSpacing="0.05"
                             android:stateListAnimator="@null"
                             app:backgroundTint="@android:color/transparent"
                             app:cornerRadius="14dp"
@@ -253,7 +312,7 @@
                             android:visibility="gone" />
                     </FrameLayout>
 
-                    <!-- Link Daftar -->
+                    <!-- Link ke Login -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -264,16 +323,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Belum punya akun? "
+                            android:text="Sudah punya akun? "
                             android:textColor="@color/text_secondary"
                             android:textSize="14sp"
                             android:fontFamily="@font/poppins_regular" />
 
                         <TextView
-                            android:id="@+id/tv_sign_up"
+                            android:id="@+id/tv_login"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Daftar Pengguna"
+                            android:text="Halaman Login"
                             android:textColor="@color/cyan_accent"
                             android:textSize="14sp"
                             android:fontFamily="@font/poppins_bold"

@@ -4,27 +4,26 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.Animator
+import android.content.Intent
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import id.digikriya.moneflo.database.DatabaseHelper
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var etEmail: TextInputEditText
+    private lateinit var etUsername: TextInputEditText
     private lateinit var etPassword: TextInputEditText
-    private lateinit var tilEmail: TextInputLayout
+    private lateinit var tilUsername: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
     private lateinit var btnSignIn: View
-    private lateinit var btnGoogle: ImageButton
-    private lateinit var btnApple: ImageButton
-    private lateinit var btnMicrosoft: ImageButton
     private lateinit var cbRememberMe: CheckBox
     private lateinit var tvForgotPassword: TextView
     private lateinit var tvSignUp: TextView
@@ -32,9 +31,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var logoContainer: View
     private lateinit var formContainer: View
 
+    private lateinit var db: DatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        db = DatabaseHelper(this)
 
         initViews()
         setupListeners()
@@ -43,88 +46,50 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        etEmail = findViewById(R.id.et_email)
-        etPassword = findViewById(R.id.et_password)
-        tilEmail = findViewById(R.id.til_email)
-        tilPassword = findViewById(R.id.til_password)
-        btnSignIn = findViewById(R.id.btn_sign_in)
-        btnGoogle = findViewById(R.id.btn_google)
-        btnApple = findViewById(R.id.btn_apple)
-        btnMicrosoft = findViewById(R.id.btn_microsoft)
-        cbRememberMe = findViewById(R.id.cb_remember_me)
+        etUsername      = findViewById(R.id.et_username)
+        etPassword      = findViewById(R.id.et_password)
+        tilUsername     = findViewById(R.id.til_username)
+        tilPassword     = findViewById(R.id.til_password)
+        btnSignIn       = findViewById(R.id.btn_sign_in)
+        cbRememberMe    = findViewById(R.id.cb_remember_me)
         tvForgotPassword = findViewById(R.id.tv_forgot_password)
-        tvSignUp = findViewById(R.id.tv_sign_up)
-        progressBar = findViewById(R.id.progress_bar)
-        logoContainer = findViewById(R.id.logo_container)
-        formContainer = findViewById(R.id.form_container)
+        tvSignUp        = findViewById(R.id.tv_sign_up)
+        progressBar     = findViewById(R.id.progress_bar)
+        logoContainer   = findViewById(R.id.logo_container)
+        formContainer   = findViewById(R.id.form_container)
     }
 
     private fun setupListeners() {
-        tilPassword.setEndIconOnClickListener {
-            val isVisible = etPassword.transformationMethod is HideReturnsTransformationMethod
-            if (isVisible) {
-                etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            } else {
-                etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            }
-            etPassword.setSelection(etPassword.text?.length ?: 0)
-        }
-
         btnSignIn.setOnClickListener {
-            if (validateInputs()) {
-                performLogin()
-            }
+            if (validateInputs()) performLogin()
         }
 
         tvForgotPassword.setOnClickListener {
             animateClick(it)
-            Toast.makeText(this, "Fitur reset password akan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
 
         tvSignUp.setOnClickListener {
             animateClick(it)
-            Toast.makeText(this, "Buat akun baru", Toast.LENGTH_SHORT).show()
-        }
-
-        btnGoogle.setOnClickListener {
-            animateClick(it)
-            Toast.makeText(this, "Masuk dengan Google", Toast.LENGTH_SHORT).show()
-        }
-
-        btnApple.setOnClickListener {
-            animateClick(it)
-            Toast.makeText(this, "Masuk dengan Apple", Toast.LENGTH_SHORT).show()
-        }
-
-        btnMicrosoft.setOnClickListener {
-            animateClick(it)
-            Toast.makeText(this, "Masuk dengan Microsoft", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 
     private fun validateInputs(): Boolean {
         var isValid = true
-        val email = etEmail.text.toString().trim()
+        val username = etUsername.text.toString().trim()
         val password = etPassword.text.toString()
 
-        if (email.isEmpty()) {
-            tilEmail.error = "Email tidak boleh kosong"
-            shakeView(tilEmail)
-            isValid = false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            tilEmail.error = "Format email tidak valid"
-            shakeView(tilEmail)
+        if (username.isEmpty()) {
+            tilUsername.error = "Username tidak boleh kosong"
+            shakeView(tilUsername)
             isValid = false
         } else {
-            tilEmail.error = null
+            tilUsername.error = null
         }
 
         if (password.isEmpty()) {
             tilPassword.error = "Password tidak boleh kosong"
-            shakeView(tilPassword)
-            isValid = false
-        } else if (password.length < 6) {
-            tilPassword.error = "Password minimal 6 karakter"
             shakeView(tilPassword)
             isValid = false
         } else {
@@ -136,16 +101,44 @@ class LoginActivity : AppCompatActivity() {
 
     private fun performLogin() {
         setLoadingState(true)
-        btnSignIn.postDelayed({
+        val username = etUsername.text.toString().trim()
+        val password = etPassword.text.toString()
+
+        // Cek username dulu
+        if (!db.isUsernameExist(username)) {
             setLoadingState(false)
-            Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
-        }, 2000)
+            tilUsername.error = "Username tidak ditemukan"
+            shakeView(tilUsername)
+            return
+        }
+
+        // Cek password
+        val user = db.loginUser(username, password)
+        if (user == null) {
+            setLoadingState(false)
+            tilPassword.error = "Password salah"
+            shakeView(tilPassword)
+            return
+        }
+
+        // Berhasil login
+        if (cbRememberMe.isChecked) {
+            db.setLoginSession(user.id)
+        }
+
+        setLoadingState(false)
+
+        // TODO: ganti MainActivity dengan DashboardActivity saat sudah dibuat
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun setLoadingState(isLoading: Boolean) {
         btnSignIn.isEnabled = !isLoading
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        etEmail.isEnabled = !isLoading
+        etUsername.isEnabled = !isLoading
         etPassword.isEnabled = !isLoading
     }
 
@@ -189,13 +182,9 @@ class LoginActivity : AppCompatActivity() {
         )
         logoPulse.duration = 2500
         logoPulse.interpolator = DecelerateInterpolator()
-
         logoPulse.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                logoPulse.start()
-            }
+            override fun onAnimationEnd(animation: Animator) { logoPulse.start() }
         })
-
         logoContainer.postDelayed({ logoPulse.start() }, 1000)
     }
 
