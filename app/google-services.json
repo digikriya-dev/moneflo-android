@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "662543667331",
+    "project_id": "moneflo-digikriya",
+    "storage_bucket": "moneflo-digikriya.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662543667331:android:95ec18249ee280d5588bb6",
+        "android_client_info": {
+          "package_name": "id.digikriya.moneflo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662543667331-7ejaceil9bffs58ltrf3ihoo9gkln2gm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.digikriya.moneflo",
+            "certificate_hash": "04f7ac59ccc4d40fa19880e8389b78d7d93fe2d4"
+          }
+        },
+        {
+          "client_id": "662543667331-su4vbe22b04o2ju9idrkmskslr1jcend.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUDdxJGo0J0kVV2d1vHJl7thBSyfaRIIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662543667331-su4vbe22b04o2ju9idrkmskslr1jcend.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

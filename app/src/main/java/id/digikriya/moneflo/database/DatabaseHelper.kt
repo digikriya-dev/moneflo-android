@@ -342,6 +342,19 @@ class DatabaseHelper(context: Context) :
         return user
     }
 
+    /** Ambil user berdasarkan email (untuk Google Sign-In) */
+    fun getUserByEmail(email: String): User? {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_USERS WHERE $COL_EMAIL = ? COLLATE NOCASE",
+            arrayOf(email)
+        )
+        var user: User? = null
+        if (cursor.moveToFirst()) user = cursorToUser(cursor)
+        cursor.close()
+        return user
+    }
+
     /** Update password user (untuk reset password & ubah password) */
     fun updatePassword(userId: Long, newPassword: String): Boolean {
         val db = writableDatabase

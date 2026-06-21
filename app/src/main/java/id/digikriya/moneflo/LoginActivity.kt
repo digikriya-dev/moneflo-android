@@ -12,10 +12,13 @@ import android.view.animation.OvershootInterpolator
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import id.digikriya.moneflo.helper.GoogleAuthHelper
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tilUsername: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
     private lateinit var btnSignIn: View
+    private lateinit var btnGoogle: View
     private lateinit var cbRememberMe: CheckBox
     private lateinit var tvForgotPassword: TextView
     private lateinit var tvSignUp: TextView
@@ -32,12 +36,32 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var formContainer: View
 
     private lateinit var db: DatabaseHelper
+    private lateinit var googleAuth: GoogleAuthHelper
+
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        googleAuth.handleSignInResult(
+            data      = result.data,
+            onSuccess = { userId, isNewUser ->
+                db.setLoginSession(userId)
+                val msg = if (isNewUser) "Akun Google berhasil didaftarkan!" else "Login dengan Google berhasil!"
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                goToDashboard()
+            },
+            onError = { message ->
+                setLoadingState(false)
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        db = DatabaseHelper(this)
+        db         = DatabaseHelper(this)
+        googleAuth = GoogleAuthHelper(this)
 
         initViews()
         setupListeners()
@@ -46,22 +70,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        etUsername      = findViewById(R.id.et_username)
-        etPassword      = findViewById(R.id.et_password)
-        tilUsername     = findViewById(R.id.til_username)
-        tilPassword     = findViewById(R.id.til_password)
-        btnSignIn       = findViewById(R.id.btn_sign_in)
-        cbRememberMe    = findViewById(R.id.cb_remember_me)
+        etUsername       = findViewById(R.id.et_username)
+        etPassword       = findViewById(R.id.et_password)
+        tilUsername      = findViewById(R.id.til_username)
+        tilPassword      = findViewById(R.id.til_password)
+        btnSignIn        = findViewById(R.id.btn_sign_in)
+        btnGoogle        = findViewById(R.id.btn_google)
+        cbRememberMe     = findViewById(R.id.cb_remember_me)
         tvForgotPassword = findViewById(R.id.tv_forgot_password)
-        tvSignUp        = findViewById(R.id.tv_sign_up)
-        progressBar     = findViewById(R.id.progress_bar)
-        logoContainer   = findViewById(R.id.logo_container)
-        formContainer   = findViewById(R.id.form_container)
+        tvSignUp         = findViewById(R.id.tv_sign_up)
+        progressBar      = findViewById(R.id.progress_bar)
+        logoContainer    = findViewById(R.id.logo_container)
+        formContainer    = findViewById(R.id.form_container)
     }
 
     private fun setupListeners() {
         btnSignIn.setOnClickListener {
             if (validateInputs()) performLogin()
+        }
+
+        btnGoogle.setOnClickListener {
+            setLoadingState(true)
+            googleSignInLauncher.launch(googleAuth.getSignInIntent())
         }
 
         tvForgotPassword.setOnClickListener {
@@ -104,7 +134,6 @@ class LoginActivity : AppCompatActivity() {
         val username = etUsername.text.toString().trim()
         val password = etPassword.text.toString()
 
-        // Cek username dulu
         if (!db.isUsernameExist(username)) {
             setLoadingState(false)
             tilUsername.error = "Username tidak ditemukan"
@@ -112,7 +141,6 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Cek password
         val user = db.loginUser(username, password)
         if (user == null) {
             setLoadingState(false)
@@ -121,13 +149,15 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Berhasil login
         if (cbRememberMe.isChecked) {
             db.setLoginSession(user.id)
         }
 
         setLoadingState(false)
+        goToDashboard()
+    }
 
+    private fun goToDashboard() {
         // TODO: ganti MainActivity dengan DashboardActivity saat sudah dibuat
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -136,10 +166,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setLoadingState(isLoading: Boolean) {
-        btnSignIn.isEnabled = !isLoading
+        btnSignIn.isEnabled    = !isLoading
+        btnGoogle.isEnabled    = !isLoading
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        etUsername.isEnabled = !isLoading
-        etPassword.isEnabled = !isLoading
+        etUsername.isEnabled   = !isLoading
+        etPassword.isEnabled   = !isLoading
     }
 
     private fun playEntryAnimation() {

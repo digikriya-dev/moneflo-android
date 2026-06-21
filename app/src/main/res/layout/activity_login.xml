@@ -61,12 +61,10 @@
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:layout_marginEnd="10dp">
-
                     <View
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/logo_glow_bg" />
-
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="26dp"
@@ -121,7 +119,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="28dp" />
 
-                    <!-- Username Field -->
+                    <!-- Username -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_username"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -140,7 +138,6 @@
                         app:startIconDrawable="@drawable/ic_person"
                         app:startIconTint="@color/cyan_accent"
                         android:hint="Username">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_username"
                             android:layout_width="match_parent"
@@ -153,7 +150,7 @@
                             android:paddingBottom="16dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Password Field -->
+                    <!-- Password -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_password"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -174,7 +171,6 @@
                         app:endIconMode="password_toggle"
                         app:endIconTint="@color/text_hint"
                         android:hint="Password">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
@@ -222,7 +218,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:layout_marginBottom="28dp">
+                        android:layout_marginBottom="16dp">
 
                         <View
                             android:layout_width="match_parent"
@@ -252,6 +248,56 @@
                             android:indeterminateTint="@color/text_primary"
                             android:visibility="gone" />
                     </FrameLayout>
+
+                    <!-- Divider OR -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/divider_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="  atau  "
+                            android:textColor="@color/text_hint"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins_regular" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/divider_color" />
+                    </LinearLayout>
+
+                    <!-- Tombol Google -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_google"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="Masuk dengan Google"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:stateListAnimator="@null"
+                        android:layout_marginBottom="24dp"
+                        app:backgroundTint="@color/social_btn_bg"
+                        app:cornerRadius="14dp"
+                        app:strokeColor="@color/input_stroke"
+                        app:strokeWidth="1dp"
+                        app:icon="@drawable/ic_google"
+                        app:iconGravity="textStart"
+                        app:iconPadding="10dp"
+                        app:rippleColor="@color/cyan_ripple"
+                        app:elevation="0dp" />
 
                     <!-- Link Daftar -->
                     <LinearLayout

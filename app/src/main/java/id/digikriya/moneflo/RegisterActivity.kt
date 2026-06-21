@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import id.digikriya.moneflo.helper.GoogleAuthHelper
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -32,14 +35,38 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var db: DatabaseHelper
 
+    private lateinit var btnGoogle: View
+    private lateinit var googleAuth: GoogleAuthHelper
+
     // Regex: hanya huruf kecil, angka, titik, underscore — tanpa spasi
     private val usernameRegex = Regex("^[a-z0-9._]+$")
+
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        googleAuth.handleSignInResult(
+            data      = result.data,
+            onSuccess = { userId, isNewUser ->
+                db.setLoginSession(userId)
+                Toast.makeText(this, "Akun Google berhasil didaftarkan!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java) // TODO: ganti DashboardActivity
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            },
+            onError = { message ->
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         db = DatabaseHelper(this)
+        googleAuth = GoogleAuthHelper(this)
+
         initViews()
         setupListeners()
     }
@@ -61,6 +88,8 @@ class RegisterActivity : AppCompatActivity() {
         btnDaftar       = findViewById(R.id.btn_daftar)
         progressBar     = findViewById(R.id.progress_bar)
         tvLogin         = findViewById(R.id.tv_login)
+        btnGoogle = findViewById(R.id.btn_google)
+
     }
 
     private fun setupListeners() {
@@ -70,6 +99,10 @@ class RegisterActivity : AppCompatActivity() {
 
         tvLogin.setOnClickListener {
             finish() // kembali ke LoginActivity
+        }
+
+        btnGoogle.setOnClickListener {
+            googleSignInLauncher.launch(googleAuth.getSignInIntent())
         }
     }
 
