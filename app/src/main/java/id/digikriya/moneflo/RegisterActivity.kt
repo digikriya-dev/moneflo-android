@@ -49,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
             onSuccess = { userId, isNewUser ->
                 db.setLoginSession(userId)
                 Toast.makeText(this, "Akun Google berhasil didaftarkan!", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java) // TODO: ganti DashboardActivity
+                val intent = Intent(this, DashboardActivity::class.java) // TODO: ganti DashboardActivity
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
@@ -197,8 +197,7 @@ class RegisterActivity : AppCompatActivity() {
 
         if (cbLangsungLogin.isChecked) {
             // Langsung login tanpa set session permanen
-            // TODO: ganti MainActivity dengan DashboardActivity saat sudah dibuat
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         } else {

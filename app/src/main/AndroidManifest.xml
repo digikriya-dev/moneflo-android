@@ -45,10 +45,13 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- MainActivity (sementara, nanti diganti DashboardActivity) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".DashboardActivity"
             android:exported="false" />
+
+        <activity android:name=".TransactionFormActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".ProfileActivity" />
 
     </application>
 

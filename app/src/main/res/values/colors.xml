@@ -31,6 +31,8 @@
     <!-- ===== STATUS ===== -->
     <color name="error_red">#FF4D6A</color>
     <color name="success_green">#3DFF8A</color>
+    <color name="income_green">#3DFF8A</color>
+    <color name="expense_red">#FF4D6A</color>
 
     <!-- ===== GRADIENT STOPS ===== -->
     <color name="gradient_start">#1A6EFA</color>
