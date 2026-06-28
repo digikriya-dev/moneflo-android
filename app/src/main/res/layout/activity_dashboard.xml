@@ -332,7 +332,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="72dp"
         android:src="@drawable/ic_add"
         android:contentDescription="Tambah Transaksi"
         app:backgroundTint="@color/cyan_accent"

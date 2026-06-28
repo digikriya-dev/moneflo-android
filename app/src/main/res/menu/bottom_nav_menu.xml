@@ -6,13 +6,6 @@
         android:icon="@drawable/ic_dashboard"
         android:title="Beranda" />
 
-    <!-- item tengah dikosongkan untuk FAB -->
-    <item
-        android:id="@+id/nav_placeholder"
-        android:icon="@drawable/ic_add"
-        android:title=""
-        android:enabled="false" />
-
     <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_history"

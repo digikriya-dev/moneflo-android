@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    tools:context=".TransactionFormActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_dark"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/text_primary" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="32dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp">
+
+            <!-- CARD FORM -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:background="@drawable/card_stroke_border">
+
+                    <!-- Nama Transaksi -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_nama_transaksi"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:errorTextColor="@color/error_red"
+                        android:hint="Nama Transaksi">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_nama_transaksi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapSentences"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Jenis Transaksi -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jenis Transaksi"
+                        android:textColor="@color/text_hint"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:layout_marginBottom="8dp" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_jenis_transaksi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="14dp">
+
+                        <RadioButton
+                            android:id="@+id/rb_pemasukan"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="Pemasukan"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center"
+                            android:buttonTint="@color/income_green"
+                            android:background="@drawable/rb_income_bg"
+                            android:layout_marginEnd="6dp" />
+
+                        <RadioButton
+                            android:id="@+id/rb_pengeluaran"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="Pengeluaran"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center"
+                            android:buttonTint="@color/expense_red"
+                            android:background="@drawable/rb_expense_bg"
+                            android:layout_marginStart="6dp" />
+                    </RadioGroup>
+
+                    <!-- Nominal -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_nominal"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:errorTextColor="@color/error_red"
+                        app:prefixText="Rp "
+                        app:prefixTextColor="@color/text_secondary"
+                        android:hint="Nominal">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_nominal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Kategori Spinner -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kategori"
+                        android:textColor="@color/text_hint"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:layout_marginBottom="8dp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:cardBackgroundColor="@color/input_bg"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="0dp">
+
+                        <Spinner
+                            android:id="@+id/spinner_kategori"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:background="@android:color/transparent" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tv_error_kategori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/error_red"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:visibility="gone"
+                        android:layout_marginTop="-10dp"
+                        android:layout_marginBottom="8dp"
+                        android:paddingStart="14dp" />
+
+                    <!-- Tanggal -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_tanggal"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@drawable/ic_email"
+                        app:endIconTint="@color/text_hint"
+                        android:hint="Tanggal">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_tanggal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Waktu -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_waktu"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        android:hint="Waktu (opsional)">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_waktu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Catatan -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_catatan"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        app:boxBackgroundColor="@color/input_bg"
+                        app:boxStrokeColor="@color/input_stroke_selector"
+                        app:boxStrokeWidth="1.5dp"
+                        app:boxCornerRadiusTopStart="14dp"
+                        app:boxCornerRadiusTopEnd="14dp"
+                        app:boxCornerRadiusBottomStart="14dp"
+                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:hintTextColor="@color/text_hint"
+                        android:hint="Catatan (opsional)">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_catatan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:minLines="3"
+                            android:gravity="top"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="16dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Tombol Simpan -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/btn_gradient_primary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_simpan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Simpan"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:stateListAnimator="@null"
+                            app:backgroundTint="@android:color/transparent"
+                            app:cornerRadius="14dp"
+                            app:rippleColor="#40FFFFFF"
+                            app:elevation="0dp" />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

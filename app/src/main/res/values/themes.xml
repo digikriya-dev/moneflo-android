@@ -17,6 +17,12 @@
     <!-- Login theme — inherit base, tidak tambah resource baru -->
     <style name="Theme.Moneflo.Login" parent="Theme.Moneflo" />
 
+    <style name="ToolbarTitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
     <!-- NoActionBar variant jika dibutuhkan activity lain -->
     <style name="Theme.Moneflo.NoActionBar" parent="Theme.Moneflo" />
 

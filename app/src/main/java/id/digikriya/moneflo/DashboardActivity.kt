@@ -116,8 +116,6 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun setupBottomNav() {
         bottomNav.selectedItemId = R.id.nav_dashboard
-        // Sembunyikan label item placeholder tengah
-        bottomNav.menu.findItem(R.id.nav_placeholder)?.isEnabled = false
     }
 
     private fun setupListeners() {
