@@ -101,7 +101,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         tvLogin.setOnClickListener {
-            finish() // kembali ke LoginActivity
+            // Navigasi eksplisit (bukan cuma finish()) — RegisterActivity bisa diakses
+            // dari Onboarding, yang sudah finish() dirinya sendiri lebih dulu, jadi
+            // back stack bisa kosong dan finish() saja akan menutup seluruh app.
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
