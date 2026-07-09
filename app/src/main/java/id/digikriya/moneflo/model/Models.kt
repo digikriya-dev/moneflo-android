@@ -6,6 +6,8 @@ data class User(
     val email: String,
     val password: String,
     val namaLengkap: String,
+    val fotoProfil: String? = null,
+    val isGoogleAccount: Boolean = false,
     val timestamp: String = ""
 )
 

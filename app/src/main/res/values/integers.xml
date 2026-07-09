@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Motion & Animations: durasi transisi standar -->
+    <integer name="motion_duration_default">250</integer>
+
+</resources>

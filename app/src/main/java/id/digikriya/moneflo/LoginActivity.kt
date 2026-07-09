@@ -91,17 +91,21 @@ class LoginActivity : AppCompatActivity() {
 
         btnGoogle.setOnClickListener {
             setLoadingState(true)
-            googleSignInLauncher.launch(googleAuth.getSignInIntent())
+            googleAuth.getFreshSignInIntent { intent ->
+                googleSignInLauncher.launch(intent)
+            }
         }
 
         tvForgotPassword.setOnClickListener {
             animateClick(it)
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         tvSignUp.setOnClickListener {
             animateClick(it)
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 
@@ -149,9 +153,18 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        // Set session — baik checkbox dicentang atau tidak
+        // Jika tidak dicentang, session tetap dibuat tapi akan dihapus saat logout
         if (cbRememberMe.isChecked) {
             db.setLoginSession(user.id)
         }
+
+        val prefs = getSharedPreferences("moneflo_prefs", MODE_PRIVATE)
+        prefs.edit().putLong("current_user_id", user.id).apply()
+
+        android.util.Log.d("LOGIN", "Session set untuk userId: ${user.id}")
+        val cek = db.getActiveSession()
+        android.util.Log.d("LOGIN", "Cek session setelah set: $cek")
 
         setLoadingState(false)
         goToDashboard()
@@ -162,6 +175,7 @@ class LoginActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun setLoadingState(isLoading: Boolean) {

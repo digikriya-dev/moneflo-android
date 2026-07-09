@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/card_bg"
+    app:cardCornerRadius="@dimen/radius_button"
+    app:cardElevation="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/card_stroke_border">
+
+        <TextView
+            android:id="@+id/menu_edit_profil"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/component_button_height"
+            android:text="Edit Profil"
+            android:textColor="@color/text_primary"
+            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_screen_padding"
+            android:paddingEnd="@dimen/spacing_screen_padding"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:id="@+id/menu_ubah_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/component_button_height"
+            android:text="Ubah Password"
+            android:textColor="@color/text_primary"
+            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_screen_padding"
+            android:paddingEnd="@dimen/spacing_screen_padding"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color" />
+
+        <TextView
+            android:id="@+id/menu_logout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/component_button_height"
+            android:text="Logout"
+            android:textColor="@color/expense_red"
+            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_screen_padding"
+            android:paddingEnd="@dimen/spacing_screen_padding"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

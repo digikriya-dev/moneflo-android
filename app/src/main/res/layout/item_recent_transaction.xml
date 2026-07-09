@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     app:cardBackgroundColor="@color/card_bg"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="@dimen/radius_button"
     app:cardElevation="0dp">
 
     <LinearLayout
@@ -27,16 +27,14 @@
                 android:id="@+id/view_icon_bg"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:background="@drawable/logo_glow_bg" />
+                android:background="@drawable/bg_circle_solid" />
 
-            <TextView
-                android:id="@+id/tv_kategori_initial"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/cyan_accent"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins_bold" />
+            <ImageView
+                android:id="@+id/iv_kategori_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cat_default" />
         </FrameLayout>
 
         <!-- Info transaksi -->
@@ -51,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_primary"
-                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.Moneflo.Body"
                 android:fontFamily="@font/poppins_medium"
                 android:maxLines="1"
                 android:ellipsize="end" />
@@ -61,8 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                android:fontFamily="@font/poppins_regular" />
+                android:textAppearance="@style/TextAppearance.Moneflo.Caption" />
         </LinearLayout>
 
         <!-- Nominal + tanggal -->
@@ -76,7 +73,7 @@
                 android:id="@+id/tv_nominal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.Moneflo.Body"
                 android:fontFamily="@font/poppins_bold" />
 
             <TextView
@@ -84,8 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_hint"
-                android:textSize="11sp"
-                android:fontFamily="@font/poppins_regular" />
+                android:textAppearance="@style/TextAppearance.Moneflo.Caption" />
         </LinearLayout>
 
     </LinearLayout>

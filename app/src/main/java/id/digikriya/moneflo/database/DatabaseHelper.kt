@@ -19,7 +19,7 @@ class DatabaseHelper(context: Context) :
     // =========================================================
     companion object {
         const val DATABASE_NAME = "moneflo.db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 3
 
         // Table names
         const val TABLE_USERS       = "users"
@@ -40,6 +40,8 @@ class DatabaseHelper(context: Context) :
         const val COL_EMAIL         = "email"
         const val COL_PASSWORD      = "password"
         const val COL_NAMA_LENGKAP  = "nama_lengkap"
+        const val COL_FOTO_PROFIL   = "foto_profil"
+        const val COL_IS_GOOGLE_ACCOUNT = "is_google_account"
 
         // Sessions columns
         const val COL_IS_LOGGED_IN  = "is_logged_in"
@@ -86,9 +88,7 @@ class DatabaseHelper(context: Context) :
 
     override fun onOpen(db: SQLiteDatabase) {
         super.onOpen(db)
-        if (!db.isReadOnly) {
-            db.execSQL("PRAGMA foreign_keys = ON;")
-        }
+        db.execSQL("PRAGMA foreign_keys = ON;")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -111,6 +111,8 @@ class DatabaseHelper(context: Context) :
                 $COL_EMAIL TEXT NOT NULL UNIQUE,
                 $COL_PASSWORD TEXT NOT NULL,
                 $COL_NAMA_LENGKAP TEXT NOT NULL,
+                $COL_FOTO_PROFIL TEXT,
+                $COL_IS_GOOGLE_ACCOUNT INTEGER NOT NULL DEFAULT 0,
                 $COL_TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """.trimIndent())
@@ -243,13 +245,20 @@ class DatabaseHelper(context: Context) :
      * Register user baru.
      * Return: user ID jika berhasil, -1 jika username/email sudah ada.
      */
-    fun registerUser(username: String, email: String, namaLengkap: String, password: String): Long {
+    fun registerUser(
+        username: String,
+        email: String,
+        namaLengkap: String,
+        password: String,
+        isGoogleAccount: Boolean = false
+    ): Long {
         val db = writableDatabase
         val cv = ContentValues().apply {
             put(COL_USERNAME, username.lowercase())
             put(COL_EMAIL, email.lowercase())
             put(COL_NAMA_LENGKAP, namaLengkap)
             put(COL_PASSWORD, hashPassword(password))
+            put(COL_IS_GOOGLE_ACCOUNT, if (isGoogleAccount) 1 else 0)
         }
         val userId = db.insertWithOnConflict(TABLE_USERS, null, cv, SQLiteDatabase.CONFLICT_IGNORE)
         if (userId != -1L) {
@@ -355,11 +364,17 @@ class DatabaseHelper(context: Context) :
         return user
     }
 
-    /** Update password user (untuk reset password & ubah password) */
+    /**
+     * Update password user (untuk reset password & ubah password). Selalu melepas
+     * status is_google_account — begitu user menetapkan/mengetahui passwordnya sendiri
+     * (baik lewat Ubah Password maupun Lupa Password), akun dianggap sudah punya
+     * password biasa dan verifikasi password lama berlaku normal untuk seterusnya.
+     */
     fun updatePassword(userId: Long, newPassword: String): Boolean {
         val db = writableDatabase
         val cv = ContentValues().apply {
             put(COL_PASSWORD, hashPassword(newPassword))
+            put(COL_IS_GOOGLE_ACCOUNT, 0)
         }
         val rows = db.update(TABLE_USERS, cv, "$COL_ID = ?", arrayOf(userId.toString()))
         return rows > 0
@@ -393,14 +408,28 @@ class DatabaseHelper(context: Context) :
     }
 
     private fun cursorToUser(cursor: android.database.Cursor): User {
+        val fotoIndex = cursor.getColumnIndex(COL_FOTO_PROFIL)
+        val isGoogleIndex = cursor.getColumnIndex(COL_IS_GOOGLE_ACCOUNT)
         return User(
             id        = cursor.getLong(cursor.getColumnIndexOrThrow(COL_ID)),
             username  = cursor.getString(cursor.getColumnIndexOrThrow(COL_USERNAME)),
             email     = cursor.getString(cursor.getColumnIndexOrThrow(COL_EMAIL)),
             password  = cursor.getString(cursor.getColumnIndexOrThrow(COL_PASSWORD)),
             namaLengkap = cursor.getString(cursor.getColumnIndexOrThrow(COL_NAMA_LENGKAP)),
+            fotoProfil = if (fotoIndex >= 0) cursor.getString(fotoIndex) else null,
+            isGoogleAccount = isGoogleIndex >= 0 && cursor.getInt(isGoogleIndex) == 1,
             timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COL_TIMESTAMP))
         )
+    }
+
+    /** Update path foto profil lokal user (null untuk hapus foto). */
+    fun updatePhotoPath(userId: Long, path: String?): Boolean {
+        val db = writableDatabase
+        val cv = ContentValues().apply {
+            put(COL_FOTO_PROFIL, path)
+        }
+        val rows = db.update(TABLE_USERS, cv, "$COL_ID = ?", arrayOf(userId.toString()))
+        return rows > 0
     }
 
     // =========================================================
@@ -432,7 +461,7 @@ class DatabaseHelper(context: Context) :
      * Return: Session object jika ada, null jika tidak.
      */
     fun getActiveSession(): Session? {
-        val db = readableDatabase
+        val db = writableDatabase  // ← ganti dari readableDatabase ke writableDatabase
         val cursor = db.rawQuery(
             "SELECT * FROM $TABLE_SESSIONS WHERE $COL_IS_LOGGED_IN = 1 LIMIT 1",
             null
@@ -448,6 +477,21 @@ class DatabaseHelper(context: Context) :
         }
         cursor.close()
         return session
+    }
+
+    fun getActiveUserId(context: Context): Long {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT $COL_USER_ID FROM $TABLE_SESSIONS WHERE $COL_IS_LOGGED_IN = 1 ORDER BY $COL_TIMESTAMP DESC LIMIT 1",
+            null
+        )
+        var userId = -1L
+        if (cursor.moveToFirst()) {
+            userId = cursor.getLong(0)
+        }
+        cursor.close()
+        db.close()
+        return userId
     }
 
     // =========================================================
@@ -638,10 +682,41 @@ class DatabaseHelper(context: Context) :
     }
 
     /**
-     * Ambil ringkasan pengeluaran per kategori bulan ini (untuk pie chart dashboard).
+     * Ambil ringkasan pengeluaran per kategori (untuk pie chart dashboard & statistik).
+     * month = null → agregat 1 tahun penuh (mode "Year"), month terisi → 1 bulan (mode "Month").
      * Return: Map<namaKategori, totalNominal>
      */
-    fun getExpenseSummaryByCategory(userId: Long, month: Int, year: Int): Map<String, Double> {
+    fun getExpenseSummaryByCategory(userId: Long, month: Int?, year: Int): Map<String, Double> {
+        val db = readableDatabase
+        val query = buildString {
+            append("""
+                SELECT c.$COL_NAMA_KATEGORI, SUM(cf.$COL_NOMINAL) as total
+                FROM $TABLE_CASHFLOWS cf
+                JOIN $TABLE_CATEGORIES c ON cf.$COL_CATEGORY_ID = c.$COL_ID
+                WHERE cf.$COL_USER_ID = ?
+                  AND cf.$COL_JENIS_TRANSAKSI = 'expense'
+                  AND strftime('%Y', cf.$COL_TIMESTAMP) = '$year'
+            """.trimIndent())
+            if (month != null) append(" AND strftime('%m', cf.$COL_TIMESTAMP) = '${month.toString().padStart(2, '0')}'")
+            append(" GROUP BY c.$COL_ID ORDER BY total DESC")
+        }
+        val cursor = db.rawQuery(query, arrayOf(userId.toString()))
+        val map = linkedMapOf<String, Double>()
+        while (cursor.moveToNext()) {
+            val nama  = cursor.getString(0)
+            val total = cursor.getDouble(1)
+            map[nama] = total
+        }
+        cursor.close()
+        return map
+    }
+
+    /**
+     * Ambil ringkasan pengeluaran per kategori dalam rentang tanggal (mode "Week").
+     * startDate/endDate format "yyyy-MM-dd".
+     * Return: Map<namaKategori, totalNominal>
+     */
+    fun getExpenseSummaryByDateRange(userId: Long, startDate: String, endDate: String): Map<String, Double> {
         val db = readableDatabase
         val cursor = db.rawQuery("""
             SELECT c.$COL_NAMA_KATEGORI, SUM(cf.$COL_NOMINAL) as total
@@ -649,16 +724,35 @@ class DatabaseHelper(context: Context) :
             JOIN $TABLE_CATEGORIES c ON cf.$COL_CATEGORY_ID = c.$COL_ID
             WHERE cf.$COL_USER_ID = ?
               AND cf.$COL_JENIS_TRANSAKSI = 'expense'
-              AND strftime('%m', cf.$COL_TIMESTAMP) = '${month.toString().padStart(2, '0')}'
-              AND strftime('%Y', cf.$COL_TIMESTAMP) = '$year'
+              AND date(cf.$COL_TIMESTAMP) BETWEEN date(?) AND date(?)
             GROUP BY c.$COL_ID
             ORDER BY total DESC
-        """.trimIndent(), arrayOf(userId.toString()))
+        """.trimIndent(), arrayOf(userId.toString(), startDate, endDate))
         val map = linkedMapOf<String, Double>()
         while (cursor.moveToNext()) {
             val nama  = cursor.getString(0)
             val total = cursor.getDouble(1)
             map[nama] = total
+        }
+        cursor.close()
+        return map
+    }
+
+    /** Hitung jumlah transaksi per kategori (expense saja) dalam rentang tanggal — untuk detail list Statistik. */
+    fun getExpenseCountByCategory(userId: Long, startDate: String, endDate: String): Map<String, Int> {
+        val db = readableDatabase
+        val cursor = db.rawQuery("""
+            SELECT c.$COL_NAMA_KATEGORI, COUNT(*) as jumlah
+            FROM $TABLE_CASHFLOWS cf
+            JOIN $TABLE_CATEGORIES c ON cf.$COL_CATEGORY_ID = c.$COL_ID
+            WHERE cf.$COL_USER_ID = ?
+              AND cf.$COL_JENIS_TRANSAKSI = 'expense'
+              AND date(cf.$COL_TIMESTAMP) BETWEEN date(?) AND date(?)
+            GROUP BY c.$COL_ID
+        """.trimIndent(), arrayOf(userId.toString(), startDate, endDate))
+        val map = linkedMapOf<String, Int>()
+        while (cursor.moveToNext()) {
+            map[cursor.getString(0)] = cursor.getInt(1)
         }
         cursor.close()
         return map

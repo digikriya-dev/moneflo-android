@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <!-- Coin M mark, centered in the adaptive safe zone (~44dp) -->
+  <group
+      android:pivotX="256"
+      android:pivotY="256"
+      android:scaleX="0.85"
+      android:scaleY="0.85">
+    <path
+        android:pathData="M256,256m-107.52,0a107.52,107.52 0,1 1,215.04 0a107.52,107.52 0,1 1,-215.04 0"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="25.6"/>
+    <path
+        android:pathData="M215.04,302.08L215.04,225.28C215.04,215.04 225.28,215.04 232.96,230.4L256,271.36L279.04,230.4C286.72,215.04 296.96,215.04 296.96,225.28L296.96,302.08"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="25.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"/>
+  </group>
+</vector>

@@ -13,6 +13,7 @@ import id.digikriya.moneflo.database.DatabaseHelper
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import id.digikriya.moneflo.helper.GoogleAuthHelper
+import id.digikriya.moneflo.helper.playEntranceAnimation
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -53,6 +54,7 @@ class RegisterActivity : AppCompatActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             },
             onError = { message ->
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -69,6 +71,7 @@ class RegisterActivity : AppCompatActivity() {
 
         initViews()
         setupListeners()
+        playEntranceAnimation()
     }
 
     private fun initViews() {
@@ -99,10 +102,13 @@ class RegisterActivity : AppCompatActivity() {
 
         tvLogin.setOnClickListener {
             finish() // kembali ke LoginActivity
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         btnGoogle.setOnClickListener {
-            googleSignInLauncher.launch(googleAuth.getSignInIntent())
+            googleAuth.getFreshSignInIntent { intent ->
+                googleSignInLauncher.launch(intent)
+            }
         }
     }
 
@@ -196,17 +202,19 @@ class RegisterActivity : AppCompatActivity() {
         setLoadingState(false)
 
         if (cbLangsungLogin.isChecked) {
-            // Langsung login tanpa set session permanen
+            // TAMBAHKAN: set session dulu sebelum pindah
+            db.setLoginSession(userId)
             val intent = Intent(this, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         } else {
-            // Kembali ke Login
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
         finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+
     }
 
     private fun setLoadingState(isLoading: Boolean) {

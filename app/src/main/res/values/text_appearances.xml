@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- H2 uses poppins_bold; there is no semibold weight bundled in @font, bold is the closest match. -->
+    <style name="TextAppearance.Moneflo.H1" parent="android:TextAppearance">
+        <item name="android:textSize">34sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="TextAppearance.Moneflo.H2" parent="android:TextAppearance">
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="TextAppearance.Moneflo.Body" parent="android:TextAppearance">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="TextAppearance.Moneflo.Caption" parent="android:TextAppearance">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+</resources>

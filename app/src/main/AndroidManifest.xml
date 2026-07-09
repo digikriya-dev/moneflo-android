@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MoneFloApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false" />
 
         <activity
             android:name=".LoginActivity"
@@ -47,27 +52,38 @@
 
         <activity
             android:name=".DashboardActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".HistoryActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".StatisticsActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".TransactionFormActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".ProfileActivity"
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".EditProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity android:name=".ChangePasswordActivity"
+        <activity
+            android:name=".ChangePasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 

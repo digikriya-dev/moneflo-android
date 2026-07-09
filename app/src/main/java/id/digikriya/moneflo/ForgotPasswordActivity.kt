@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import id.digikriya.moneflo.helper.playEntranceAnimation
 
 // =====================================================================
 // ForgotPasswordActivity
@@ -26,6 +27,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_forgot_password)
 
         db = DatabaseHelper(this)
+        playEntranceAnimation()
 
         etUsername  = findViewById(R.id.et_username)
         tilUsername = findViewById(R.id.til_username)
@@ -51,6 +53,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             val intent = Intent(this, ResetPasswordActivity::class.java)
             intent.putExtra("USER_ID", user.id)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 }

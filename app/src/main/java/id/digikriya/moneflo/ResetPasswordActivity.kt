@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import id.digikriya.moneflo.helper.playEntranceAnimation
 
 // =====================================================================
 // ResetPasswordActivity
@@ -32,6 +33,7 @@ class ResetPasswordActivity : AppCompatActivity() {
         if (userId == -1L) { finish(); return }
 
         db = DatabaseHelper(this)
+        playEntranceAnimation()
 
         etPasswordBaru       = findViewById(R.id.et_password_baru)
         etKonfirmasiPassword = findViewById(R.id.et_konfirmasi_password)
@@ -76,6 +78,7 @@ class ResetPasswordActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         } else {
             Toast.makeText(this, "Gagal mengubah password", Toast.LENGTH_SHORT).show()
         }

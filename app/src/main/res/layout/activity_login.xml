@@ -8,34 +8,10 @@
     android:background="@color/bg_dark"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/bg_geometric_overlay"
-        android:scaleType="centerCrop"
-        android:alpha="0.35" />
-
-    <View
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="top|center_horizontal"
-        android:background="@drawable/glow_circle_top"
-        android:translationY="-80dp"
-        android:alpha="0.4" />
-
-    <View
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom|end"
-        android:background="@drawable/glow_circle_bottom"
-        android:translationY="60dp"
-        android:alpha="0.3" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_login"
         android:fillViewport="true">
 
         <LinearLayout
@@ -89,14 +65,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/card_bg"
-                app:cardCornerRadius="24dp"
+                app:cardCornerRadius="@dimen/radius_card"
                 app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp"
+                    android:padding="@dimen/spacing_section_gap"
                     android:background="@drawable/card_stroke_border">
 
                     <TextView
@@ -104,18 +80,16 @@
                         android:layout_height="wrap_content"
                         android:text="Selamat Datang!"
                         android:textColor="@color/text_primary"
-                        android:textSize="26sp"
-                        android:fontFamily="@font/poppins_bold"
+                        android:textAppearance="@style/TextAppearance.Moneflo.H2"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="4dp" />
+                        android:layout_marginBottom="@dimen/spacing_unit" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Masuk untuk melanjutkan"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/poppins_regular"
+                        android:textAppearance="@style/TextAppearance.Moneflo.Body"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="28dp" />
 
@@ -125,14 +99,14 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="@dimen/spacing_screen_padding"
                         app:boxBackgroundColor="@color/input_bg"
                         app:boxStrokeColor="@color/input_stroke_selector"
                         app:boxStrokeWidth="1.5dp"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:boxCornerRadiusTopStart="@dimen/radius_button"
+                        app:boxCornerRadiusTopEnd="@dimen/radius_button"
+                        app:boxCornerRadiusBottomStart="@dimen/radius_button"
+                        app:boxCornerRadiusBottomEnd="@dimen/radius_button"
                         app:hintTextColor="@color/text_hint"
                         app:errorTextColor="@color/error_red"
                         app:startIconDrawable="@drawable/ic_person"
@@ -144,10 +118,9 @@
                             android:layout_height="wrap_content"
                             android:inputType="textNoSuggestions"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:paddingTop="16dp"
-                            android:paddingBottom="16dp" />
+                            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+                            android:paddingTop="@dimen/spacing_screen_padding"
+                            android:paddingBottom="@dimen/spacing_screen_padding" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Password -->
@@ -156,14 +129,14 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="@dimen/spacing_gap"
                         app:boxBackgroundColor="@color/input_bg"
                         app:boxStrokeColor="@color/input_stroke_selector"
                         app:boxStrokeWidth="1.5dp"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusBottomEnd="14dp"
+                        app:boxCornerRadiusTopStart="@dimen/radius_button"
+                        app:boxCornerRadiusTopEnd="@dimen/radius_button"
+                        app:boxCornerRadiusBottomStart="@dimen/radius_button"
+                        app:boxCornerRadiusBottomEnd="@dimen/radius_button"
                         app:hintTextColor="@color/text_hint"
                         app:errorTextColor="@color/error_red"
                         app:startIconDrawable="@drawable/ic_lock"
@@ -177,10 +150,9 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:paddingTop="16dp"
-                            android:paddingBottom="16dp" />
+                            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+                            android:paddingTop="@dimen/spacing_screen_padding"
+                            android:paddingBottom="@dimen/spacing_screen_padding" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Tetap Login + Lupa Password -->
@@ -189,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="24dp">
+                        android:layout_marginBottom="@dimen/spacing_section_gap">
 
                         <CheckBox
                             android:id="@+id/cb_remember_me"
@@ -197,8 +169,7 @@
                             android:layout_height="wrap_content"
                             android:text="Tetap Login"
                             android:textColor="@color/text_secondary"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/poppins_regular"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption"
                             android:buttonTint="@color/cyan_accent"
                             android:layout_weight="1" />
 
@@ -208,8 +179,7 @@
                             android:layout_height="wrap_content"
                             android:text="Lupa Password?"
                             android:textColor="@color/cyan_accent"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/poppins_medium"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption"
                             android:clickable="true"
                             android:focusable="true" />
                     </LinearLayout>
@@ -217,26 +187,21 @@
                     <!-- Tombol Login -->
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="16dp">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/btn_gradient_primary" />
+                        android:layout_height="@dimen/component_button_height"
+                        android:layout_marginBottom="@dimen/spacing_screen_padding">
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_sign_in"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="Masuk"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/on_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:letterSpacing="0.05"
                             android:stateListAnimator="@null"
-                            app:backgroundTint="@android:color/transparent"
-                            app:cornerRadius="14dp"
+                            android:background="@drawable/btn_gradient_primary"
+                            app:cornerRadius="@dimen/radius_button"
                             app:rippleColor="#40FFFFFF"
                             app:elevation="0dp" />
 
@@ -255,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="@dimen/spacing_screen_padding">
 
                         <View
                             android:layout_width="0dp"
@@ -268,8 +233,7 @@
                             android:layout_height="wrap_content"
                             android:text="  atau  "
                             android:textColor="@color/text_hint"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/poppins_regular" />
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption" />
 
                         <View
                             android:layout_width="0dp"
@@ -285,15 +249,15 @@
                         android:layout_height="52dp"
                         android:text="Masuk dengan Google"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/poppins_medium"
+                        android:textAppearance="@style/TextAppearance.Moneflo.Body"
                         android:stateListAnimator="@null"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="@dimen/spacing_section_gap"
                         app:backgroundTint="@color/social_btn_bg"
-                        app:cornerRadius="14dp"
+                        app:cornerRadius="@dimen/radius_button"
                         app:strokeColor="@color/input_stroke"
                         app:strokeWidth="1dp"
                         app:icon="@drawable/ic_google"
+                        app:iconTint="@null"
                         app:iconGravity="textStart"
                         app:iconPadding="10dp"
                         app:rippleColor="@color/cyan_ripple"
@@ -312,8 +276,7 @@
                             android:layout_height="wrap_content"
                             android:text="Belum punya akun? "
                             android:textColor="@color/text_secondary"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/poppins_regular" />
+                            android:textAppearance="@style/TextAppearance.Moneflo.Body" />
 
                         <TextView
                             android:id="@+id/tv_sign_up"
@@ -321,7 +284,7 @@
                             android:layout_height="wrap_content"
                             android:text="Daftar Pengguna"
                             android:textColor="@color/cyan_accent"
-                            android:textSize="14sp"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Body"
                             android:fontFamily="@font/poppins_bold"
                             android:clickable="true"
                             android:focusable="true" />

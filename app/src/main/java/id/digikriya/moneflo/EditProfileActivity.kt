@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import id.digikriya.moneflo.helper.playEntranceAnimation
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -29,11 +30,11 @@ class EditProfileActivity : AppCompatActivity() {
         if (currentUserId == -1L) { finish(); return }
 
         db = DatabaseHelper(this)
-
         initViews()
         setupToolbar()
         loadCurrentData()
         setupSaveButton()
+        playEntranceAnimation()
     }
 
     private fun initViews() {
@@ -49,7 +50,10 @@ class EditProfileActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationOnClickListener { finish() }
+        toolbar.setNavigationOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        }
     }
 
     private fun loadCurrentData() {
@@ -96,13 +100,15 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun performSave() {
-        val nama  = etNamaLengkap.text.toString().trim()
-        val email = etEmail.text.toString().trim()
-
-        val berhasil = db.updateProfile(currentUserId, nama, email)
+        val berhasil = db.updateProfile(
+            currentUserId,
+            etNamaLengkap.text.toString().trim(),
+            etEmail.text.toString().trim()
+        )
         if (berhasil) {
             Toast.makeText(this, "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
             finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         } else {
             Toast.makeText(this, "Gagal memperbarui profil", Toast.LENGTH_SHORT).show()
         }

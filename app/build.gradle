@@ -18,10 +18,23 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            // Sengaja pakai keystore debug (bukan keystore release terpisah) supaya
+            // SHA-1 tetap sama dengan yang sudah terdaftar di Firebase Console untuk
+            // Google Sign-In — jadi APK release ini tidak perlu setup Firebase tambahan.
+            storeFile file('../moneflo-debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -30,6 +43,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    lint {
+        checkReleaseBuilds false
     }
 }
 

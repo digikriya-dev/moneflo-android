@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    tools:context=".StatisticsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bg_dark">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_screen_padding"
+            android:paddingEnd="@dimen/spacing_screen_padding"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp">
+
+            <FrameLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="10dp">
+                <View
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/logo_glow_bg" />
+                <TextView
+                    android:id="@+id/tv_avatar_initial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/cyan_accent"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_bold" />
+                <ImageView
+                    android:id="@+id/iv_avatar_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_greeting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hi!"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold" />
+
+            <ImageView
+                android:id="@+id/btn_bell"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_bell"
+                android:background="@drawable/logo_glow_bg"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_screen_padding"
+                android:paddingEnd="@dimen/spacing_screen_padding">
+
+            <!-- SEGMENTED CONTROL Week/Month/Year -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_segment_container"
+                android:padding="4dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/seg_week"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Minggu"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                    android:fontFamily="@font/poppins_medium"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/seg_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Bulan"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                    android:fontFamily="@font/poppins_medium"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/seg_year"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Tahun"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                    android:fontFamily="@font/poppins_medium"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- DONUT CHART -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="@dimen/radius_card"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_screen_padding"
+                    android:background="@drawable/card_stroke_border">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pie_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp" />
+
+                    <TextView
+                        android:id="@+id/tv_chart_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Belum ada pengeluaran pada periode ini."
+                        android:textColor="@color/text_secondary"
+                        android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="24dp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_legend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="12dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- HIGHEST CATEGORY -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="@dimen/radius_card"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_screen_padding"
+                    android:background="@drawable/card_stroke_border">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kategori Tertinggi"
+                            android:textColor="@color/text_secondary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption" />
+
+                        <TextView
+                            android:id="@+id/tv_highest_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.H2"
+                            android:layout_marginTop="2dp" />
+
+                        <TextView
+                            android:id="@+id/tv_highest_note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/income_green"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                            android:fontFamily="@font/poppins_medium"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp">
+                        <View
+                            android:id="@+id/view_highest_icon_bg"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_circle_solid" />
+                        <ImageView
+                            android:id="@+id/iv_highest_icon"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_cat_default" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- DAILY AVG + SMART TIP -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardBackgroundColor="@color/card_bg"
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_screen_padding"
+                        android:background="@drawable/card_stroke_border">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rata-rata Harian"
+                            android:textColor="@color/text_secondary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption" />
+
+                        <TextView
+                            android:id="@+id/tv_daily_avg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Body"
+                            android:fontFamily="@font/poppins_bold"
+                            android:layout_marginTop="6dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardBackgroundColor="@color/secondary"
+                    app:cardCornerRadius="@dimen/radius_card"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_screen_padding">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="✨ SMART TIP"
+                            android:textColor="@color/on_secondary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                            android:fontFamily="@font/poppins_bold" />
+
+                        <TextView
+                            android:id="@+id/tv_smart_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/on_secondary"
+                            android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                            android:layout_marginTop="6dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- DETAILS -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rincian Kategori"
+                android:textColor="@color/text_primary"
+                android:textAppearance="@style/TextAppearance.Moneflo.Body"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginBottom="@dimen/spacing_gap" />
+
+            <LinearLayout
+                android:id="@+id/ll_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_details_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Belum ada pengeluaran pada periode ini."
+                android:textColor="@color/text_secondary"
+                android:textAppearance="@style/TextAppearance.Moneflo.Caption"
+                android:gravity="center"
+                android:visibility="gone"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
+
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <!-- BOTTOM NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/component_bottom_nav_height"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_bottom_nav"
+        app:itemIconTint="@color/bottom_nav_selector"
+        app:itemTextColor="@color/bottom_nav_selector"
+        app:itemIconSize="@dimen/component_bottom_nav_icon_size"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"
+        app:elevation="12dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

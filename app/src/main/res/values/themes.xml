@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base app theme -->
+    <!-- Base app theme — Light -->
     <style name="Theme.Moneflo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/cyan_accent</item>
-        <item name="colorPrimaryVariant">@color/blue_accent</item>
-        <item name="colorOnPrimary">@color/text_primary</item>
-        <item name="colorSurface">@color/card_bg</item>
-        <item name="android:colorBackground">@color/bg_dark</item>
-        <item name="android:windowBackground">@color/bg_dark</item>
-        <item name="android:statusBarColor">@color/bg_dark</item>
-        <item name="android:navigationBarColor">@color/bg_dark</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_container</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSurface">@color/surface_container_low</item>
+        <item name="colorError">@color/error</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
     <!-- Login theme — inherit base, tidak tambah resource baru -->

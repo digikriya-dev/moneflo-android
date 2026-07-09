@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import id.digikriya.moneflo.database.DatabaseHelper
+import id.digikriya.moneflo.helper.playEntranceAnimation
 import id.digikriya.moneflo.model.Cashflow
 import id.digikriya.moneflo.model.Category
 import java.text.SimpleDateFormat
@@ -73,6 +74,7 @@ class TransactionFormActivity : AppCompatActivity() {
         setupKategoriSpinner()
         setupDateTimePickers()
         setupSaveButton()
+        playEntranceAnimation()
 
         if (isEdit && cashflowId != -1L) {
             loadExistingData()
@@ -103,7 +105,10 @@ class TransactionFormActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = if (isEdit) "Edit Transaksi" else "Tambah Transaksi"
-        toolbar.setNavigationOnClickListener { finish() }
+        toolbar.setNavigationOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        }
     }
 
     private fun setupKategoriSpinner() {
@@ -355,5 +360,6 @@ class TransactionFormActivity : AppCompatActivity() {
             startActivity(intent)
         }
         finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

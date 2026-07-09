@@ -34,8 +34,16 @@ class GoogleAuthHelper(private val context: Context) {
         GoogleSignIn.getClient(context, gso)
     }
 
-    /** Intent untuk dilauncher dari Activity */
-    fun getSignInIntent(): Intent = googleSignInClient.signInIntent
+    /**
+     * Minta intent sign-in yang "bersih" — sign-out dulu dari GoogleSignInClient
+     * supaya akun terakhir yang dipakai tidak otomatis ke-cache, dan dialog pemilih
+     * akun Google selalu muncul setiap kali tombol "Masuk dengan Google" ditekan.
+     */
+    fun getFreshSignInIntent(onReady: (Intent) -> Unit) {
+        googleSignInClient.signOut().addOnCompleteListener {
+            onReady(googleSignInClient.signInIntent)
+        }
+    }
 
     /**
      * Proses result dari Google Sign-In intent.
@@ -107,12 +115,15 @@ class GoogleAuthHelper(private val context: Context) {
             onSuccess(existingUser.id, false)
         } else {
             // User baru → daftarkan ke SQLite
-            // Password di-set dari UID Firebase (tidak bisa dipakai login manual)
+            // Password diisi placeholder acak (tidak diketahui & tidak dipakai user) —
+            // isGoogleAccount = true supaya halaman Ubah Password tahu untuk melewati
+            // verifikasi "password lama" sampai user menetapkan password pertamanya sendiri.
             val userId = db.registerUser(
-                username    = username,
-                email       = email,
-                namaLengkap = namaLengkap,
-                password    = firebaseUser.uid  // hash dari UID Firebase
+                username        = username,
+                email           = email,
+                namaLengkap     = namaLengkap,
+                password        = firebaseUser.uid,
+                isGoogleAccount = true
             )
             if (userId != -1L) {
                 onSuccess(userId, true)
