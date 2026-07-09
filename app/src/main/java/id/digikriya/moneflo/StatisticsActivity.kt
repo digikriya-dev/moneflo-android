@@ -1,11 +1,13 @@
 package id.digikriya.moneflo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.PieChart
@@ -17,6 +19,7 @@ import id.digikriya.moneflo.helper.BottomNavHelper
 import id.digikriya.moneflo.helper.CategoryVisuals
 import id.digikriya.moneflo.helper.NotificationPopupHelper
 import id.digikriya.moneflo.helper.PhotoHelper
+import id.digikriya.moneflo.helper.ProfileMenuPopupHelper
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,6 +27,7 @@ import java.util.Locale
 
 class StatisticsActivity : AppCompatActivity() {
 
+    private lateinit var btnAvatar: View
     private lateinit var tvAvatarInitial: TextView
     private lateinit var ivAvatarPhoto: ImageView
     private lateinit var tvGreeting: TextView
@@ -83,6 +87,7 @@ class StatisticsActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        btnAvatar = findViewById(R.id.btn_avatar)
         tvAvatarInitial = findViewById(R.id.tv_avatar_initial)
         ivAvatarPhoto = findViewById(R.id.iv_avatar_photo)
         tvGreeting = findViewById(R.id.tv_greeting)
@@ -117,6 +122,47 @@ class StatisticsActivity : AppCompatActivity() {
         btnBell.setOnClickListener {
             NotificationPopupHelper.show(this, btnBell)
         }
+
+        btnAvatar.setOnClickListener {
+            ProfileMenuPopupHelper.show(
+                context = this,
+                anchor = btnAvatar,
+                onEditProfil = { openEditProfil() },
+                onUbahPassword = { openUbahPassword() },
+                onLogout = { showLogoutConfirmation() }
+            )
+        }
+    }
+
+    private fun openEditProfil() {
+        startActivity(Intent(this, EditProfileActivity::class.java).apply {
+            putExtra("USER_ID", currentUserId)
+        })
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun openUbahPassword() {
+        startActivity(Intent(this, ChangePasswordActivity::class.java).apply {
+            putExtra("USER_ID", currentUserId)
+        })
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Logout")
+            .setMessage("Yakin ingin keluar dari akun?")
+            .setPositiveButton("Logout") { _, _ ->
+                db.logout()
+                getSharedPreferences("moneflo_prefs", MODE_PRIVATE)
+                    .edit().remove("current_user_id").apply()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("Batal", null)
+            .show()
     }
 
     private fun setupSegmentControl() {

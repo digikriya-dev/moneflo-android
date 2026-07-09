@@ -74,7 +74,17 @@ class DatabaseHelper(context: Context) :
 
         // Default categories
         val DEFAULT_CATEGORIES = listOf(
-            "Makan", "Transportasi", "Kos", "Tugas", "Hiburan", "Lainnya"
+            // Kebutuhan Pokok & Tetap
+            "Tempat Tinggal", "Tagihan & Utilitas", "Belanja Bulanan", "Transportasi",
+            "Kesehatan", "Pendidikan", "Cicilan & Hutang",
+            // Gaya Hidup & Hiburan
+            "Makanan & Minuman", "Hiburan & Langganan", "Belanja Modis", "Liburan & Hobi", "Sosial & Donasi",
+            // Pemasukan
+            "Gaji", "Sampingan", "Investasi", "Bonus & Hadiah",
+            // Khusus
+            "Transfer Antar Rekening", "Tabungan",
+            // Lain-lain
+            "Lainnya"
         )
     }
 

@@ -30,6 +30,7 @@ import java.util.Calendar
 
 class HistoryActivity : AppCompatActivity() {
 
+    private lateinit var btnAvatar: View
     private lateinit var tvAvatarInitial: TextView
     private lateinit var ivAvatarPhoto: ImageView
     private lateinit var tvGreeting: TextView
@@ -86,6 +87,7 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        btnAvatar         = findViewById(R.id.btn_avatar)
         tvAvatarInitial   = findViewById(R.id.tv_avatar_initial)
         ivAvatarPhoto     = findViewById(R.id.iv_avatar_photo)
         tvGreeting        = findViewById(R.id.tv_greeting)
@@ -113,6 +115,47 @@ class HistoryActivity : AppCompatActivity() {
         btnBell.setOnClickListener {
             id.digikriya.moneflo.helper.NotificationPopupHelper.show(this, btnBell)
         }
+
+        btnAvatar.setOnClickListener {
+            id.digikriya.moneflo.helper.ProfileMenuPopupHelper.show(
+                context = this,
+                anchor = btnAvatar,
+                onEditProfil = { openEditProfil() },
+                onUbahPassword = { openUbahPassword() },
+                onLogout = { showLogoutConfirmation() }
+            )
+        }
+    }
+
+    private fun openEditProfil() {
+        startActivity(Intent(this, EditProfileActivity::class.java).apply {
+            putExtra("USER_ID", currentUserId)
+        })
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun openUbahPassword() {
+        startActivity(Intent(this, ChangePasswordActivity::class.java).apply {
+            putExtra("USER_ID", currentUserId)
+        })
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+    }
+
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Logout")
+            .setMessage("Yakin ingin keluar dari akun?")
+            .setPositiveButton("Logout") { _, _ ->
+                db.logout()
+                getSharedPreferences("moneflo_prefs", MODE_PRIVATE)
+                    .edit().remove("current_user_id").apply()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("Batal", null)
+            .show()
     }
 
     private fun setupSearch() {

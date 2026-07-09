@@ -66,6 +66,10 @@ class DashboardActivity : AppCompatActivity() {
             currentUserId = session.userId
         }
 
+        // Backfill kategori default baru untuk user lama yang sudah terdaftar
+        // sebelum daftar kategori ini diperluas (aman dipanggil berkali-kali).
+        db.seedDefaultCategories(currentUserId)
+
         initViews()
         setupHeader()
         BottomNavHelper.setup(bottomNav, R.id.nav_dashboard, this, currentUserId)
