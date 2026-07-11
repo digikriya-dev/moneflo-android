@@ -14,8 +14,6 @@ Project ini dikerjakan sebagai tugas UAS mata kuliah **Pemrograman Mobile 1** �
 
 ## Daftar Anggota Kelompok
 
-<!-- TODO: lengkapi dengan data anggota kelompok yang sebenarnya -->
-
 | Nama | NPM | Peran |
 |---|---|---|
 | _M. Ridwan Nurfauzi_ | _24552011204_ | _Ketua Kelompok / Project Manager_ |
@@ -76,21 +74,15 @@ APK release siap-install sudah tersedia di [`/apk/moneflo-release.apk`](apk/mone
 
 ## Screenshot Aplikasi
 
-<!-- TODO: tambahkan minimal 2 screenshot aplikasi (mis. Dashboard & Riwayat Transaksi).
-     Simpan file gambar di folder screenshots/, lalu ganti placeholder di bawah. -->
-
-| Dashboard | Riwayat Transaksi |
+| Dashboard | Login |
 |---|---|
-| ![Dashboard](screenshots/dashboard.png) | ![Riwayat Transaksi](screenshots/riwayat.png) |
+| ![Dashboard](screenshots/dashboard.jpeg) | ![Login](screenshots/login.jpeg) |
 
 ---
 
 ## Video Penjelasan Project
 
-<!-- TODO: ganti dengan link video (YouTube/Google Drive, akses publik) berisi:
-     1) perkenalan anggota kelompok, 2) demo aplikasi, 3) penjelasan alur kode -->
-
-📺 **Link Video:** _[isi link video di sini]_
+📺 **Link Video:** [https://youtu.be/ZCS6N5ZQ0L4](https://youtu.be/ZCS6N5ZQ0L4?si=7jWlWCxaAddNC9Hy)
 
 ---
 
