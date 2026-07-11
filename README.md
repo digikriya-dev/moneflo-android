@@ -18,9 +18,10 @@ Project ini dikerjakan sebagai tugas UAS mata kuliah **Pemrograman Mobile 1** â€
 
 | Nama | NPM | Peran |
 |---|---|---|
-| _Nama Anggota 1_ | _NPM_ | _misal: Ketua / UI-UX / Backend_ |
-| _Nama Anggota 2_ | _NPM_ | _misal: Database / Auth_ |
-| _Nama Anggota 3_ | _NPM_ | _misal: Testing / Dokumentasi_ |
+| _M. Ridwan Nurfauzi_ | _24552011204_ | _Ketua Kelompok / Project Manager_ |
+| _Hilvan Yadhisnata_ | _24552011163_ | _Programmer_ |
+| _Iqbal Kadian_ | _25552012024_ | _Laporan Dokumentasi_ |
+| _Tanri Vebriansyah_ | _23552011384_ | _Program Tester_ |
 
 ---
 
