@@ -88,9 +88,9 @@ APK release siap-install sudah tersedia di [`/apk/moneflo-release.apk`](apk/mone
 
 ## Use Case Diagram
 
-![Moneflo Use Case Diagram](design/use-cases/use_case_diagram.jpg)
+![Moneflo Use Case Diagram](ooad/diagrams/use_case_diagram.png)
 
-Laporan OOAD lengkap (Class Diagram, ERD, Sequence Diagram, Activity Diagram) ada di [`/ooad`](ooad/README.md).
+Diagram di atas diambil dari laporan OOAD kelompok (lihat [Use Case Narrative lengkap](ooad/README.md#6-use-case-diagram)). Laporan OOAD selengkapnya (Class Diagram, Object Diagram, Component Diagram, Deployment Diagram, Activity Diagram, Sequence Diagram, State-Chart Diagram, Class Design, ERD) ada di [`/ooad`](ooad/README.md).
 
 ---
 
